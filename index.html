@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cookie Clicker with Upgrades</title>
+    <style>
+      #cookie {
+        width: 200px;
+        height: 200px;
+        background-image: url("cookie.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        cursor: pointer;
+      }
+      #count {
+        font-size: 48px;
+        text-align: center;
+      }
+      .upgrade {
+        display: inline-block;
+        margin: 10px;
+        padding: 10px;
+        background-color: #eee;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cookie"></div>
+    <div id="count">0</div>
+    <div id="upgrades">
+      <div id="cursor" class="upgrade">Cursor: 0</div>
+      <div id="grandma" class="upgrade">Grandma: 0</div>
+      <div id="farm" class="upgrade">Farm: 0</div>
+    </div>
+    <script>
+      var count = 0;
+      var cookie = document.getElementById("cookie");
+      var countDisplay = document.getElementById("count");
+      var cursorCount = 0;
+      var cursorUpgrade = document.getElementById("cursor");
+      var grandmaCount = 0;
+      var grandmaUpgrade = document.getElementById("grandma");
+      var farmCount = 0;
+      var farmUpgrade = document.getElementById("farm");
+
+      cookie.addEventListener("click", function() {
+        count++;
+        countDisplay.innerHTML = count;
+      });
+
+      cursorUpgrade.addEventListener("click", function() {
+        var cost = 10 * Math.pow(2, cursorCount);
+        if (count >= cost) {
+          count -= cost;
+          cursorCount++;
+          countDisplay.innerHTML = count;
+          cursorUpgrade.innerHTML = "Cursor: " + cursorCount;
+        }
+      });
+
+      grandmaUpgrade.addEventListener("click", function() {
+        var cost = 50 * Math.pow(2, grandmaCount);
+        if (count >= cost) {
+          count -= cost;
+          grandmaCount++;
+          countDisplay.innerHTML = count;
+          grandmaUpgrade.innerHTML = "Grandma: " + grandmaCount;
+        }
+      });
+
+      farmUpgrade.addEventListener("click", function() {
+        var cost = 100 * Math.pow(2, farmCount);
+        if (count >= cost) {
+          count -= cost;
+          farmCount++;
+          countDisplay.innerHTML = count;
+          farmUpgrade.innerHTML = "Farm: " + farmCount;
+        }
+      });
+
+      function updateUpgrades() {
+        var cursorCost = 10 * Math.pow(2, cursorCount);
+        var grandmaCost = 50 * Math.pow(2, grandmaCount);
+        var farmCost = 100 * Math.pow(2, farmCount);
+        cursorUpgrade.innerHTML = "Cursor: " + cursorCount + " (" + cursorCost + ")";
+        grandmaUpgrade.innerHTML = "Grandma: " + grandmaCount + " (" + grandmaCost + ")";
+        farmUpgrade.innerHTML = "Farm: " + farmCount + " (" + farmCost + ")";
+      }
+
+      setInterval(function() {
+        count += cursorCount;
+        count += 5 * grandmaCount;
+        count += 10 * farmCount;
+        countDisplay.innerHTML = count;
+      }, 1000);
+
+      setInterval(function() {
+        updateUpgrades();
+      }, 100);
+    </script>
+  </body>
+</html>
